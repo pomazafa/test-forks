@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createQueryBuilder } from "typeorm";
+import { createQueryBuilder, getRepository } from "typeorm";
 import { validate } from "class-validator";
 
 import { Fork } from "../entity/Fork";
@@ -7,19 +7,11 @@ import { Fork } from "../entity/Fork";
 class ForkController {
 
     static listAll = async (req: Request, res: Response) => {
-        // const forkRepository = getRepository(Fork);
-
         const query = createQueryBuilder('fork', 'f')
             .innerJoin('f.user', 'u')
             .innerJoin('f.category', 'c')
             .select(['f', 'u.email', 'u.username', 'c']);
         const forks = await query.getMany();
-        // const forks = await forkRepository.find({
-        //     select: ["id", "name", "description", "year"],
-        //     relations: ["user", "category"]
-        // });
-
-        console.log(forks)
 
         res.send(forks);
     };
