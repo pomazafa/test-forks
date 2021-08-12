@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getRepository, createQueryBuilder } from "typeorm";
 import { validate } from "class-validator";
 
 import { Category } from "../entity/Category";
+import { Fork } from "../entity/Fork";
 
 class CategoryController {
 
@@ -12,6 +13,18 @@ class CategoryController {
             select: ["id", "name", "description"]
         });
 
+        res.send(categories);
+    };
+
+    static listAllForks = async (req: Request, res: Response) => {
+
+
+        const query = createQueryBuilder('Fork', 'f')
+            .innerJoin('f.category', 'c')
+            .select(['f'])
+            .where("c.id = :categoryId", { categoryId: req.params && req.params.id });
+
+        const categories = await query.getMany();
         res.send(categories);
     };
 
