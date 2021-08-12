@@ -16,4 +16,6 @@ router.get("/:id/subscribers", [checkJwt], async (req, res) => {
     res.send(categorySubscribers);
 });
 
+router.get("/:id/forks", [checkJwt], CategoryController.listAllForks);
+
 export default router;
