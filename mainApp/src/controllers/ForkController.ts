@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { createQueryBuilder, getRepository } from "typeorm";
 import { validate } from "class-validator";
-
+import { Events } from "../util/types/events.enum";
+import EventEmitter from "../util/eventEmitter";
 import { Fork } from "../entity/Fork";
 
 class ForkController {
@@ -38,6 +39,8 @@ class ForkController {
             res.status(409).send("such fork name already exists");
             return;
         }
+
+        EventEmitter.emit(Events.ForkCreated, fork);
 
         res.status(201).send("Fork created");
     }

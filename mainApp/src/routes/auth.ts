@@ -5,7 +5,7 @@ import AuthController from "../controllers/AuthController";
 const router = Router();
 //Login route
 router.post("/login", AuthController.login);
-router.post("/refresh", AuthController.refresh);
+// router.post("/refresh", AuthController.refresh);
 
 //Change my password
 // router.post("/change-password", [checkJwt], AuthController.changePassword);

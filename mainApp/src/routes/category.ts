@@ -11,6 +11,9 @@ router.post("/", [checkJwt], CategoryController.newCategory);
 
 router.post("/:id/subscribers", [checkJwt], CategorySubscriberController.newCategorySubscriber);
 
-router.get("/:id/subscribers", [checkJwt], CategorySubscriberController.listAll);
+router.get("/:id/subscribers", [checkJwt], async (req, res) => {
+    let categorySubscribers = await CategorySubscriberController.listAll(req.params && req.params.id);
+    res.send(categorySubscribers);
+});
 
 export default router;
