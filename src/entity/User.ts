@@ -10,6 +10,7 @@ import {
 import { IsEmail, IsNotEmpty, Length } from "class-validator";
 import * as bcrypt from "bcryptjs";
 import { Fork } from "../entity/Fork";
+import { CategorySubscriber } from "../entity/CategorySubscriber";
 
 @Entity()
 @Unique(["username"])
@@ -42,6 +43,9 @@ export class User {
 
     @OneToMany(type => Fork, fork => fork.user)
     forks: Fork[];
+
+    @OneToMany(type => CategorySubscriber, categorySubscriber => categorySubscriber.user)
+    categorySubscribers: CategorySubscriber[];
 
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 8);

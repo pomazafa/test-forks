@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { IsNotEmpty, Length } from "class-validator";
 import { Fork } from "../entity/Fork";
+import { CategorySubscriber } from "../entity/CategorySubscriber";
 
 @Entity()
 @Unique(["name"])
@@ -36,4 +37,7 @@ export class Category {
 
     @OneToMany(type => Fork, fork => fork.category)
     forks: Fork[];
+
+    @OneToMany(type => CategorySubscriber, categorySubscriber => categorySubscriber.user)
+    categorySubscribers: CategorySubscriber[];
 }
